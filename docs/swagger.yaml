@@ -1,0 +1,280 @@
+host: 127.0.0.1:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: 青烟绕指柔
+    url: http://www.swagger.io/support
+  description: 记账操作
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: 记账后端接口文档
+  version: "1.0"
+paths:
+  /account:
+    get:
+      consumes:
+      - application/json
+      description: 获取用户账单条目
+      parameters:
+      - default: admin
+        description: 用户名
+        in: formData
+        name: user
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"msg": "获取成功","data": "res"}'
+        "500":
+          description: '{"msg": "服务器出错，请稍后重试"}'
+      summary: 获取用户账单条目
+      tags:
+      - account
+    post:
+      consumes:
+      - application/json
+      description: 添加账单条目
+      parameters:
+      - default: admin
+        description: 用户名
+        in: formData
+        name: user
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"msg": "添加成功"}'
+        "301":
+          description: '{"msg": "请重新上传信息"}'
+        "400":
+          description: '{"msg": "账单条目类型错误"}'
+        "500":
+          description: '{"msg": "服务器出错，请稍后重试"}'
+      summary: 添加账单条目
+      tags:
+      - account
+  /account/:id:
+    delete:
+      consumes:
+      - application/json
+      description: 按照账单id删除用户账单条目
+      parameters:
+      - default: admin
+        description: 用户名
+        in: formData
+        name: user
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"msg": "删除成功"}'
+        "300":
+          description: '{"msg": "上传的id无效，请重新上传"}'
+        "500":
+          description: '{"msg": "服务器出错，请稍后重试"}'
+      summary: 删除用户账单条目
+      tags:
+      - account
+  /img:
+    delete:
+      consumes:
+      - application/json
+      description: 获取用户以及用户关注者上传的图片
+      parameters:
+      - default: admin
+        description: 用户名
+        in: formData
+        name: user
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"msg": "success"}'
+        "500":
+          description: '{"msg": "服务器出错，请稍后重试"}'
+      summary: 获取用户以及用户关注者上传的图片
+      tags:
+      - image
+    post:
+      consumes:
+      - application/json
+      description: 添加图片
+      parameters:
+      - default: admin
+        description: 用户名
+        in: formData
+        name: user
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"msg": "success"}'
+        "301":
+          description: '{"msg": "请使用jpg或者png格式的图片上传"}'
+        "500":
+          description: '{"msg": "服务器出错，请稍后重试"}'
+        "501":
+          description: '{"msg": "保存图片出错，请稍后重试"}'
+      summary: 添加图片
+      tags:
+      - image
+  /img/:name:
+    post:
+      consumes:
+      - application/json
+      description: 根据图片名字删除图片
+      parameters:
+      - default: admin
+        description: 用户名
+        in: formData
+        name: user
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"msg": "删除成功"}'
+        "301":
+          description: '{"msg": "删除的图片名字无效，请重新上传"}'
+        "500":
+          description: '{"msg": "服务器出错，请稍后重试"}'
+      summary: 删除图片
+      tags:
+      - image
+  /link:
+    delete:
+      consumes:
+      - application/json
+      description: 使用jwt鉴权，默认双Token放在请求头Authorization的Bearer中，并以空格隔开
+      parameters:
+      - default: admin
+        description: 用户名
+        in: formData
+        name: user
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"msg": "success"}'
+        "300":
+          description: '{"msg": "无效参数"}'
+        "301":
+          description: '{"msg": "鉴权失败，用户不存在"}'
+      summary: 获取token接口
+      tags:
+      - jwt
+  /link/:id:
+    get:
+      consumes:
+      - application/json
+      description: 获取用户绑定的用户
+      parameters:
+      - default: admin
+        description: 用户名
+        in: formData
+        name: user
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"msg": "设置成功", "data": "res"}'
+        "300":
+          description: '{"msg": "上传的id无效，请重新上传"}'
+        "301":
+          description: '{"msg": "需要绑定的用户不存在"}'
+        "500":
+          description: '{"msg": "服务器抖动，请稍后重试"}'
+      summary: 获取用户绑定的用户接口
+      tags:
+      - link
+  /link/:id1/:id2:
+    delete:
+      consumes:
+      - application/json
+      description: 删除用户1和用户2之间的关系
+      parameters:
+      - default: admin
+        description: 用户名
+        in: formData
+        name: user
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"msg": "删除成功"}'
+        "300":
+          description: '{"msg": "上传的id无效，请重新上传"}'
+        "301":
+          description: '{"msg": "删除绑定的用户不存在"}'
+        "500":
+          description: '{"msg": "服务器抖动，请稍后重试"}'
+      summary: 删除用户绑定接口
+      tags:
+      - link
+    post:
+      consumes:
+      - application/json
+      description: 用户进行关系建立接口
+      parameters:
+      - default: admin
+        description: 用户名
+        in: formData
+        name: user
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"msg": "设置成功"}'
+        "300":
+          description: '{"msg": "上传的id无效，请重新上传"}'
+        "301":
+          description: '{"msg": "需要绑定的用户不存在"}'
+        "500":
+          description: '{"msg": "服务器抖动，请稍后重试"}'
+      summary: 用户关系建立接口
+      tags:
+      - link
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: 用户进行注册的接口
+      parameters:
+      - default: admin
+        description: 用户名
+        in: formData
+        name: user
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"msg": "上传成功"}'
+        "300":
+          description: '{"msg": "请重新上传信息"}'
+      summary: 用户注册接口
+      tags:
+      - user
+swagger: "2.0"
